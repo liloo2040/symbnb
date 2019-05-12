@@ -7,21 +7,22 @@
     <div class="container">
         <h1 class="my-3">Voici les annonces de nos hôtes</h1>
         <div class="row">
-            {% for i in 0..20 %}
+            {% for ad in ads %}
                 <div class="col-md-4">
                     <div class="card bg-light mb-3">
                         <div class="card-header text-center">
-                            3 chambres,
-                            <strong>49&euro; /nuit</strong><br>
+                            {{ ad.rooms }}
+                            chambres,
+                            <strong>{{ ad.price }}&euro; /nuit</strong><br>
                             <small>Pas encore noté</small>
                         </div>
-                        <img alt="Image de l'appartement" src="http://placehold.it/1000x400" style="height: 200px; width: 100%; display: block">
+                        <img alt="Image de l'appartement" src="{{ ad.coverImage}}" style="height: 200px; width: 100%; display: block">
                         <div class="card-body">
                             <h4 class="card-title">
-                                Appartement tout nouveau !
+                                {{ ad.title }}
                             </h4>
                             <p class="card-text">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit voluptas veniam tempore repellat voluptatibus cupiditate voluptates quo eligendi nam enim!
+                                {{ ad.introduction }}
                             </p>
                             <a class="btn btn-secondary" href="#">En savoir plus</a>
                         </div>

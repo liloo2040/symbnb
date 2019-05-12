@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Entity\Ad;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class AdController extends Controller
 {
@@ -12,8 +13,10 @@ class AdController extends Controller
      */
     public function index()
     {
+        $repo = $this->getDoctrine()->getRepository(Ad::class);
+        $ads = $repo->findAll();
         return $this->render('ad/index.html.twig', [
-            'controller_name' => 'AdController',
+            'ads' => $ads,
         ]);
     }
 }
