@@ -7,6 +7,8 @@ use App\Repository\AdRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Form\AdType;
 
 class AdController extends Controller
 {
@@ -23,13 +25,30 @@ class AdController extends Controller
     }
 
     /**
+     * Créé une annonce
+     * @Route("/ads/new", name="ads_create")
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        $ad = new Ad();
+        $form = $this->createForm(AdType::class, $ad);
+        return $this->render(
+            'ad/new.html.twig',
+            array(
+                'form' => $form->createView()
+            )
+        );
+    }
+
+    /**
      * @Route("/ads/{slug}", name="ads_show")
      *
      * @return Response
      */
-    public function show($slug, AdRepository $repo)
+    public function show(Ad $ad)
     {
-        $ad = $repo->findOneBySlug($slug);
         return $this->render('ad/show.html.twig', array(
             'ad' => $ad
         ));
