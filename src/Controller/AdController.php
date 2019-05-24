@@ -37,9 +37,12 @@ class AdController extends Controller
         $form = $this->createForm(AdType::class, $ad);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($ad);
             $manager->flush();
+
+            $this->addFlash('success', "L'annonce <strong>{$ad->getTitle()}</strong> a bien été enregistrée!");
 
             return $this->redirectToRoute('ads_show', array(
                 'slug' => $ad->getSlug()
