@@ -8,9 +8,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AdType extends AbstractType
 {
@@ -45,7 +45,7 @@ class AdType extends AbstractType
                 TextType::class,
                 $this->getConfiguration("Introduction", "Ajoutez une description à votre annonce")
             )
-            ->add('content', TextareaType::class, $this->getConfiguration("Description détaillée de l'annonce", "Décrivez en détails votre annonce"))
+            ->add('content', TextareaType::class, $this->getConfiguration("Description détaillée", "Description annonce"))
             ->add(
                 'rooms',
                 IntegerType::class,
