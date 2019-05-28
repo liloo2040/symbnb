@@ -21,16 +21,18 @@ class AdType extends AbstractType
      *
      * @param string $label
      * @param string $placeholder
+     * @param array $options
      * @return array
      */
-    private function getConfiguration($label, $placeholder)
+    private function getConfiguration($label, $placeholder, $required = TRUE)
     {
-        return array(
+        return [
             'label' => $label,
-            'attr' => array(
+            'attr' => [
                 'placeholder' => $placeholder
-            )
-        );
+            ],
+            'required' => $required
+        ];
     }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -39,7 +41,7 @@ class AdType extends AbstractType
             ->add(
                 'slug',
                 TextType::class,
-                $this->getConfiguration("Adresse web", "Votre adresse web (automatique)")
+                $this->getConfiguration("Adresse web", "Votre adresse web (automatique)", false)
             )
             ->add('coverImage', UrlType::class, $this->getConfiguration("URL de l'image", "Ajoutez l'URL de votre image"))
             ->add(
