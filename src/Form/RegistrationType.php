@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\User;
 use App\Form\ApplicationType;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
@@ -24,6 +23,7 @@ class RegistrationType extends ApplicationType
             ->add('email', EmailType::class, $this->getConfiguration("Email", "Votre adresse e-mail"))
             ->add('picture', UrlType::class, $this->getConfiguration("Photo de profil", "URL avatar"))
             ->add('hash', PasswordType::class, $this->getConfiguration("Mot de passe", "Choisissez un mot de passe"))
+            ->add('passwordConfirm', PasswordType::class, $this->getConfiguration("Confirmation de mot de passe", "Veuillez confirmer votre mot de passe"))
             ->add('introduction', TextType::class, $this->getConfiguration("Introduction", "Présentez-vous"))
             ->add('description', TextareaType::class, $this->getConfiguration("Description détaillée", "Ajoutez des détails"));
     }
