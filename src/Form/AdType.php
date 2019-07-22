@@ -24,7 +24,7 @@ class AdType extends ApplicationType
             ->add(
                 'slug',
                 TextType::class,
-                $this->getConfiguration("Adresse web", "Votre adresse web (automatique)", false)
+                $this->getConfiguration("Adresse web", "Votre adresse web (automatique)", ['required' => false])
             )
             ->add('coverImage', UrlType::class, $this->getConfiguration("URL de l'image", "Ajoutez l'URL de votre image"))
             ->add(
