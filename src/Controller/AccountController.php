@@ -12,12 +12,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class AccountController extends AbstractController
+class AccountController extends Controller
 {
     /**
      * Connexion
@@ -163,5 +163,17 @@ class AccountController extends AbstractController
         return $this->render('user/index.html.twig', array(
             'user' => $this->getUser()
         ));
+    }
+
+    /**
+     * Affiche la liste des réservations effectuées par l'utilisateur
+     * 
+     * @Route("/account/bookings", name="account_bookings")
+     *
+     * @return Response
+     */
+    public function bookings()
+    {
+        return $this->render('account/bookings.html.twig');
     }
 }
