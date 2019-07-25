@@ -7,20 +7,20 @@
             {% block title %}Welcome!
             {% endblock %}
         </title>
-        <link href="/css/bootstrap.min.css" rel="stylesheet">
-        <link href="/css/app.css" rel="stylesheet">
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
+        <link href="/css/bootstrap.min.css" rel="stylesheet"><link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css" integrity="sha384-i1LQnF23gykqWXg6jxC2ZbCbUMxyw5gLZY6UiUS98LYV5unm8GWmfkIS6jqJfb4E" rel="stylesheet">
 
-        {% include 'partials/header.html.twig' %}
+        <link href="/css/app.css" rel="stylesheet"> {% block stylesheets %}{% endblock %}
+        </head>
+        <body>
 
-        {% block body %}{% endblock %}
+            {% include 'partials/header.html.twig' %}
 
-        {% include 'partials/footer.html.twig' %}
-        <script src="/js/jquery.min.js"></script>
-        <script src="/js/popper.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
-        {% block javascripts %}{% endblock %}
-    </body>
-</html>
+            {% block body %}{% endblock %}
+
+            {% include 'partials/footer.html.twig' %}
+            <script src="/js/jquery.min.js"></script>
+            <script src="/js/popper.min.js"></script>
+            <script src="/js/bootstrap.min.js"></script>
+            {% block javascripts %}{% endblock %}
+        </body>
+    </html>
