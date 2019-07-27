@@ -50,7 +50,7 @@
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="accountDropdownLink">
                         <img src="{{ app.user.picture }}" alt="Avatar de {{ app.user.fullName }}" class="avatar avatar-mini">{{ app.user.fullName }}</a>
                     <div aria-labbeledby="accountDropdownLink" class="dropdown-menu dropdown-menu-right">
-                        <a href="{{ path('account_logout') }}" class="dropdown-item">Déconnexion</a>
+                        <a href="{{ path('admin_account_logout') }}" class="dropdown-item">Déconnexion</a>
                     </div>
                 </li>
             {% endif %}
