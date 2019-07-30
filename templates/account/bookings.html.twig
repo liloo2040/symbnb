@@ -37,7 +37,7 @@
                         au
                         {{ booking.endDate | date('d/m/Y') }}
                         (
-                        {{ booking.amount | number_format(2, ',' , ' ')}}
+                        {{ booking.amount | number_format(2, ',' , ' ') }}
                         &euro;)
                     </p>
                     <a href="{{ path('booking_show', {'id': booking.id}) }}" class="btn btn-info">Plus d'informations</a>
