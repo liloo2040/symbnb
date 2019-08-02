@@ -5,45 +5,47 @@
 
 {% block body %}
 
-<div class="container-fluid">
-    <h1 class="my-5">Administration des réservations</h1>
+    <div class="container-fluid">
+        <h1 class="my-5">Administration des réservations</h1>
 
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Date</th>
-                <th>Visiteur</th>
-                <th>Annonce</th>
-                <th>Durée</th>
-                <th>Montant</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for booking in bookings %}
+        <table class="table table-hover">
+            <thead>
                 <tr>
-                    <td>{{ booking.id }}</td>
-                    <td>{{ booking.createdAt | date('d/m/Y H:i') }}</td>
-                    <td>
-                        <img src="{{ booking.booker.picture }}" alt="Avatar de {{ booking.booker.fullName }}" class="avatar avatar-micro mr-2">{{ booking.booker.fullName }}
-                    </td>
-                    <td>
-                        {{ booking.ad.title }}</td>
-                    <td>{{ booking.duration }}</td>
-                    <td>{{ booking.amount | number_format(2, ',' , ' ') }}
-                        &euro;</td>
-
-                    <td>
-                        <a class="btn btn-primary" href="{{ path('admin_booking_edit', {'id': booking.id}) }}">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a class="btn btn-danger" href="{{ path('admin_booking_delete', {'id': booking.id}) }}">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </td>
+                    <th>Id</th>
+                    <th>Date</th>
+                    <th>Visiteur</th>
+                    <th>Annonce</th>
+                    <th>Durée</th>
+                    <th>Montant</th>
+                    <th></th>
                 </tr>
-            </td>
-        </tbody>
-    </tr>
-</tbody></tbody></tr>{% endfor %}</table></div>{% endblock %}
+            </thead>
+            <tbody>
+                {% for booking in pagination.data %}
+                    <tr>
+                        <td>{{ booking.id }}</td>
+                        <td>{{ booking.createdAt | date('d/m/Y H:i') }}</td>
+                        <td>
+                            <img src="{{ booking.booker.picture }}" alt="Avatar de {{ booking.booker.fullName }}" class="avatar avatar-micro mr-2">{{ booking.booker.fullName }}
+                        </td>
+                        <td>
+                            {{ booking.ad.title }}</td>
+                        <td>{{ booking.duration }}</td>
+                        <td>{{ booking.amount | number_format(2, ',' , ' ') }}
+                            &euro;</td>
+
+                        <td>
+                            <a class="btn btn-primary" href="{{ path('admin_booking_edit', {'id': booking.id}) }}">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a class="btn btn-danger" href="{{ path('admin_booking_delete', {'id': booking.id}) }}">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </td>
+            </tbody>
+        </tr>
+    {% endfor %}
+</table>
+{{ pagination.display() }}</div>{% endblock %}
