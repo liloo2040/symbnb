@@ -36,13 +36,24 @@ class PaginationService
     {
         return $this->templatePath;
     }
-    public function setRoute($route)
+    /**
+     * Changement de la route
+     *
+     * @param string $route nom de route
+     * @return self
+     */
+    public function setRoute(string $route): self 
     {
         $this->route = $route;
         return $this;
     }
 
-    public function getRoute()
+/**
+ * Récupération nom de la route
+ *
+ * @return string
+ */
+    public function getRoute(): string
     {
         return $route;
     }
