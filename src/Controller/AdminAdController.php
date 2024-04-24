@@ -6,7 +6,7 @@ use App\Entity\Ad;
 use App\Form\AdType;
 use App\Repository\AdRepository;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,7 +33,7 @@ class AdminAdController extends AbstractController
      * @param Ad $ad
      * @return Response
      */
-    public function edit(Ad $ad, Request $request, ObjectManager $manager)
+    public function edit(Ad $ad, Request $request, EntityManagerInterface $manager)
     {
         $form = $this->createForm(AdType::class, $ad);
 
@@ -63,7 +63,7 @@ class AdminAdController extends AbstractController
      * @param ObjectManager $manager
      * @return Response
      */
-    public function delete(Ad $ad, ObjectManager $manager)
+    public function delete(Ad $ad, EntityManagerInterface $manager)
     {
         if (count($ad->getBookings()) > 0) {
             $this->addFlash(
