@@ -9,10 +9,10 @@ use App\Form\RegistrationType;
 use App\Form\PasswordUpdateType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Core\Security as SecurityCore;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -42,7 +42,8 @@ class AccountController extends AbstractController
      * @return void
      */
     public function logout()
-    { }
+    {
+    }
 
     /**
      * Affichage du formulaire d'inscription
@@ -50,7 +51,7 @@ class AccountController extends AbstractController
      * @Route("/register", name="account_register")
      * @return Response
      */
-    public function register(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
+    public function register(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
 
@@ -82,11 +83,11 @@ class AccountController extends AbstractController
      * Affiche le formulaire de modification de profil
      *
      * @Route("/account/profile", name="account_profile")
-     * @IsGranted("ROLE_USER")
+     * @Security("is_granted('ROLE_USER')")
      * 
      * @return Response
      */
-    public function profile(Request $request, ObjectManager $manager)
+    public function profile(Request $request, EntityManagerInterface $manager)
     {
         $user = $this->getUser();
         $form = $this->createForm(AccountType::class, $user);
@@ -112,10 +113,10 @@ class AccountController extends AbstractController
      * Permet de modifier le mot de passe
      *
      * @Route("/account/password-update", name="account_password")
-     * @IsGranted("ROLE_USER")
+     * @Security("is_granted('ROLE_USER')")
      * @return Response
      */
-    public function updatePassword(Request $request, UserPasswordEncoderInterface $encoder, ObjectManager $manager)
+    public function updatePassword(Request $request, UserPasswordEncoderInterface $encoder, EntityManagerInterface $manager)
     {
         $passwordUpdate = new PasswordUpdate();
 
@@ -155,7 +156,7 @@ class AccountController extends AbstractController
      * Affichage profil
      *
      * @Route("/account", name="account_index")
-     * @IsGranted("ROLE_USER")
+     * @Security("is_granted('ROLE_USER')")
      * @return Response
      */
     public function myAccount()
