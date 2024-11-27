@@ -2,7 +2,7 @@
   "type": "project",
   "license": "proprietary",
   "require": {
-    "php": "^8.4",
+    "php": "^8.3",
     "ext-ctype": "*",
     "ext-iconv": "*",
     "cocur/slugify": "^3.2",
@@ -50,8 +50,8 @@
     "symfony/maker-bundle": "^1.0",
     "symfony/phpunit-bridge": "4.4.*",
     "symfony/stopwatch": "6.0.*",
-    "symfony/web-profiler-bundle": "4.4.*",
-    "symfony/web-server-bundle": "^4.4.2"
+    "symfony/web-profiler-bundle": "5.4.*",
+    "symfony/web-server-bundle": "^5.4"
   },
   "config": {
     "preferred-install": {
