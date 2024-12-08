@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdController extends AbstractController
@@ -31,7 +31,7 @@ class AdController extends AbstractController
     /**
      * Crée une annonce
      * @Route("/ads/new", name="ads_create")
-     * @IsGranted("ROLE_USER")
+     * [#IsGranted('ROLE_USER')]
      *
      * @return Response
      */
@@ -71,7 +71,7 @@ class AdController extends AbstractController
     /**
      * Affichage du formulaire d'édition
      * @Route("/ads/{slug}/edit", name="ads_edit")
-     * @Security("is_granted('ROLE_USER') and user === ad.getAuthor()", message="Cette annonce ne vous appartient pas, vous ne pouvez pas la modifier.")
+     * [#IsGranted('ROLE_USER') and user === ad.getAuthor()", message="Cette annonce ne vous appartient pas, vous ne pouvez pas la modifier."]
      * 
      * @return Response
      */
@@ -116,7 +116,7 @@ class AdController extends AbstractController
      * Permet de supprimer une annonce
      * 
      * @Route("/ads/{slug}/delete", name="ads_delete")
-     * @Security("is_granted('ROLE_USER') and user == ad.getAuthor()", message="Vous n'avez pas le droit d'accéder à cette ressource")
+     * [#IsGranted('ROLE_USER') and user == ad.getAuthor()", message="Vous n'avez pas le droit d'accéder à cette ressource"]
      *
      * @param Ad $ad
      * @param ObjectManager $manager

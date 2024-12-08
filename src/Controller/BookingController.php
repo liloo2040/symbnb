@@ -10,14 +10,14 @@ use App\Form\CommentType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BookingController extends AbstractController
 {
     /**
      * @Route("/ads/{slug}/book", name="booking_create")
-     * @IsGranted("ROLE_USER")
+     * [#IsGranted("ROLE_USER")]
      */
     public function book(Ad $ad, Request $request, EntityManagerInterface $manager)
     {

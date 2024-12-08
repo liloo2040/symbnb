@@ -111,7 +111,7 @@ class AccountController extends AbstractController
      * Permet de modifier le mot de passe
      *
      * @Route("/account/password-update", name="account_password")
-     * @Security("is_granted('ROLE_USER')")
+     *[#IsGranted('ROLE_USER')]
      * @return Response
      */
     public function updatePassword(Request $request, UserPasswordEncoderInterface $encoder, EntityManagerInterface $manager)
@@ -154,7 +154,7 @@ class AccountController extends AbstractController
      * Affichage profil
      *
      * @Route("/account", name="account_index")
-     * @Security("is_granted('ROLE_USER')")
+     * [#IsGranted('ROLE_USER')]
      * @return Response
      */
     public function myAccount()
