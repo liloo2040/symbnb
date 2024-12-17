@@ -93,5 +93,14 @@
     "post-update-cmd": [
       "@auto-scripts"
     ]
+  },
+  "conflict": {
+    "symfony/symfony": "*"
+  },
+  "extra": {
+    "symfony": {
+      "allow-contrib": false,
+      "require": "5.4"
+    }
   }
 }
