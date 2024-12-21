@@ -21,7 +21,7 @@ class AppFixtures extends Fixture
     {
         $this->encoder = $encoder;
     }
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
 
@@ -31,27 +31,26 @@ class AppFixtures extends Fixture
 
         $adminUser = new User();
         $adminUser->setFirstName('Amy')
-                    ->setLastName('Dev')
-                    ->setEmail('amy@symfony.com')
-                    ->setHash($this->encoder->encodePassword($adminUser, 'password'))
-                    ->setPicture('https://avatars.io/')
-                    ->setIntroduction($faker->sentence())
-                    ->setDescription('<p>' . join('<p></p>', $faker->paragraphs(3)). '</p>')
-                    ->addUserRole($adminRole);
+            ->setLastName('Dev')
+            ->setEmail('amy@symfony.com')
+            ->setHash($this->encoder->encodePassword($adminUser, 'password'))
+            ->setPicture('https://avatars.io/')
+            ->setIntroduction($faker->sentence())
+            ->setDescription('<p>' . join('<p></p>', $faker->paragraphs(3)) . '</p>')
+            ->addUserRole($adminRole);
         $manager->persist($adminUser);
 
         //Gestion des utilisateurs
         $users = [];
         $genres = ['male', 'female'];
 
-        for ($i=1; $i <=10; $i++)
-        {
+        for ($i = 1; $i <= 10; $i++) {
             $user = new User();
 
             $genre = $faker->randomElement($genres);
 
             $picture = 'https://randomuser.me/api/portraits/';
-            $pictureId = $faker->numberBetween(1,99) . '.jpg';
+            $pictureId = $faker->numberBetween(1, 99) . '.jpg';
 
             $picture .= ($genre == 'male' ? 'men/' :  'women/') . $pictureId;
 
@@ -61,7 +60,7 @@ class AppFixtures extends Fixture
                 ->setLastName($faker->lastname)
                 ->setEmail($faker->email)
                 ->setIntroduction($faker->sentence())
-                ->setDescription('<p>' . join('<p></p>', $faker->paragraphs(3)). '</p>')
+                ->setDescription('<p>' . join('<p></p>', $faker->paragraphs(3)) . '</p>')
                 ->setHash($hash)
                 ->setPicture($picture);
 
@@ -69,12 +68,11 @@ class AppFixtures extends Fixture
             $users[] = $user;
         }
         //Gestion des annonces
-        for($i=1; $i <=30; $i++)
-        {
+        for ($i = 1; $i <= 30; $i++) {
             $ad = new Ad();
 
             $title = $faker->sentence();
-            $coverImage = "https://picsum.photos/1200/350?random=" . mt_rand(1,55000);
+            $coverImage = "https://picsum.photos/1200/350?random=" . mt_rand(1, 55000);
             $introduction = $faker->paragraph(2);
             $content = '<p>' . join('<p></p>', $faker->paragraphs(5)) . '</p>';
 
@@ -85,52 +83,49 @@ class AppFixtures extends Fixture
                 ->setIntroduction($introduction)
                 ->setContent($content)
                 ->setPrice(mt_rand(40, 200))
-                ->setRooms(mt_rand(1,5))
+                ->setRooms(mt_rand(1, 5))
                 ->setAuthor($user);
 
-            for($j = 1; $j <= mt_rand(2,5); $j++)
-            {
+            for ($j = 1; $j <= mt_rand(2, 5); $j++) {
                 $image = new Image();
-                $image->setUrl("https://picsum.photos/640/480?random=" . mt_rand(0,55000))
-                        ->setCaption($faker->sentence())
-                        ->setAd($ad);
-                
+                $image->setUrl("https://picsum.photos/640/480?random=" . mt_rand(0, 55000))
+                    ->setCaption($faker->sentence())
+                    ->setAd($ad);
+
                 $manager->persist($image);
             }
 
             //Gestion des réservations
-            for($j = 1; $j <= mt_rand(0,10); $j++)
-            {
+            for ($j = 1; $j <= mt_rand(0, 10); $j++) {
                 $booking = new Booking();
 
                 $createdAt = $faker->dateTimeBetween('-6 months');
                 $startDate = $faker->dateTimeBetween('-3 months');
-                
+
                 //Date de fin
                 $duration = mt_rand(3, 10);
                 $endDate = (clone $startDate)->modify("+$duration days");
 
                 $amount = $ad->getPrice() * $duration;
-                $booker = $users[mt_rand(0, count($users) -1)];
+                $booker = $users[mt_rand(0, count($users) - 1)];
                 $comment = $faker->paragraph();
 
                 $booking->setBooker($booker)
-                            ->setAd($ad)
-                            ->setStartDate($startDate)
-                            ->setEndDate($endDate)
-                            ->setCreatedAt($createdAt)
-                            ->setAmount($amount)
-                            ->setComment($comment);
+                    ->setAd($ad)
+                    ->setStartDate($startDate)
+                    ->setEndDate($endDate)
+                    ->setCreatedAt($createdAt)
+                    ->setAmount($amount)
+                    ->setComment($comment);
                 $manager->persist($booking);
-                
+
                 //Gestion commentaires
-                if(mt_rand(0,1))
-                {
+                if (mt_rand(0, 1)) {
                     $comment = new Comment();
                     $comment->setContent($faker->paragraph())
-                                ->setRating(mt_rand(1,5))
-                                ->setAuthor($booker)
-                                ->setAd($ad);
+                        ->setRating(mt_rand(1, 5))
+                        ->setAuthor($booker)
+                        ->setAd($ad);
                     $manager->persist($comment);
                 }
             }
