@@ -11,15 +11,15 @@ use App\Entity\User;
 use Faker\Factory;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
     private $encoder;
 
-    public function __construct(UserPasswordEncoderInterface $encoder)
+    public function __construct(UserPasswordHasherInterface $passwordhasher)
     {
-        $this->encoder = $encoder;
+        $this->passwordhasher = $passwordhasher;
     }
     public function load(ObjectManager $manager): void
     {
@@ -33,7 +33,7 @@ class AppFixtures extends Fixture
         $adminUser->setFirstName('Amy')
             ->setLastName('Dev')
             ->setEmail('amy@symfony.com')
-            ->setHash($this->encoder->encodePassword($adminUser, 'password'))
+            ->setHash($this->passwordhasher->hashPassword($adminUser, 'password'))
             ->setPicture('https://avatars.io/')
             ->setIntroduction($faker->sentence())
             ->setDescription('<p>' . join('<p></p>', $faker->paragraphs(3)) . '</p>')
