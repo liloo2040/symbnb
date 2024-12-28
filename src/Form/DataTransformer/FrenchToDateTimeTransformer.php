@@ -5,9 +5,12 @@ namespace App\Form\DataTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
+
 class FrenchToDateTimeTransformer implements DataTransformerInterface
 {
-
+    /**
+     * @return mixed
+     */
     public function transform($date)
     {
 
@@ -16,7 +19,9 @@ class FrenchToDateTimeTransformer implements DataTransformerInterface
         }
         $date->format('d/m/Y');
     }
-
+    /**
+     * @return mixed
+     */
     public function reverseTransform($frenchDate)
     {
         if ($frenchDate === null) {
