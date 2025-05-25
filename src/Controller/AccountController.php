@@ -12,10 +12,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security as SecurityCore;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AccountController extends AbstractController
 {
@@ -41,9 +41,7 @@ class AccountController extends AbstractController
      * @Route("/logout", name="account_logout")
      * @return void
      */
-    public function logout()
-    {
-    }
+    public function logout() {}
 
     /**
      * Affichage du formulaire d'inscription
@@ -83,7 +81,7 @@ class AccountController extends AbstractController
      * Affiche le formulaire de modification de profil
      *
      * @Route("/account/profile", name="account_profile")
-     * @Security("is_granted('ROLE_USER')")
+     * [#IsGranted('ROLE_USER')]
      * 
      * @return Response
      */
@@ -113,7 +111,7 @@ class AccountController extends AbstractController
      * Permet de modifier le mot de passe
      *
      * @Route("/account/password-update", name="account_password")
-     * @Security("is_granted('ROLE_USER')")
+     *[#IsGranted('ROLE_USER')]
      * @return Response
      */
     public function updatePassword(Request $request, UserPasswordEncoderInterface $encoder, EntityManagerInterface $manager)
@@ -156,7 +154,7 @@ class AccountController extends AbstractController
      * Affichage profil
      *
      * @Route("/account", name="account_index")
-     * @Security("is_granted('ROLE_USER')")
+     * [#IsGranted('ROLE_USER')]
      * @return Response
      */
     public function myAccount()

@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -18,7 +19,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * message="Un autre utilisateur s'est déjà inscrit avec cette adresse email, merci de la modifier"
  * )
  */
-class User implements UserInterface
+abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id()
@@ -46,7 +47,7 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=false)
      * @Assert\Url(message="Veuillez ajouter une URL valide pour votre avatar")
      */
     private $picture;
@@ -54,7 +55,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $hash;
+    private $password;
 
     /**
      * @Assert\EqualTo(propertyPath="hash", message="Vous n'avez pas correctement confirmé votre mot de passe")
@@ -86,7 +87,7 @@ class User implements UserInterface
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Role", mappedBy="users")
      */
-    private $userRoles;
+    private $roles = [];
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="booker")
@@ -121,7 +122,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->ads = new ArrayCollection();
-        $this->userRoles = new ArrayCollection();
+        $this->roles = new ArrayCollection();
         $this->bookings = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
@@ -179,14 +180,14 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getHash(): ?string
+    public function getPassword(): string
     {
-        return $this->hash;
+        return $this->password;
     }
 
-    public function setHash(string $hash): self
+    public function setPassword(string $password): self
     {
-        $this->hash = $hash;
+        $this->password = $password;
 
         return $this;
     }
@@ -258,56 +259,60 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRoles()
+    /**
+     * Parmétrage rôles
+     *
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        $roles = $this->userRoles->map(function ($role) {
-            return $role->getTitle();
-        })->toArray();
+        $roles = $this->roles;
 
         $roles[] = 'ROLE_USER';
 
-        return $roles;
+        return array_unique($roles);
     }
 
-    public function getPassword()
+    public function getUserRolePassword(): string
     {
-        return $this->hash;
+        return $this->password;
     }
 
-    public function getSalt()
-    { }
-
-    public function getUsername()
+    public function getSalt(): ?string
     {
-        return $this->email;
+        return (string) null;
     }
 
-    public function eraseCredentials()
-    { }
+    public function getUserIndentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    public function eraseCredentials() {}
 
     /**
      * @return Collection|Role[]
      */
     public function getUserRoles(): Collection
     {
-        return $this->userRoles;
+        return $this->roles;
     }
 
-    public function addUserRole(Role $userRole): self
+    public function addUserRole(Role $role): self
     {
-        if (!$this->userRoles->contains($userRole)) {
-            $this->userRoles[] = $userRole;
-            $userRole->addUser($this);
+        if (!$this->roles->contains($role)) {
+            $this->roles[] = $role;
+            $role->addUser($this);
         }
 
         return $this;
     }
 
-    public function removeUserRole(Role $userRole): self
+    public function removeUserRole(Role $role): self
     {
-        if ($this->userRoles->contains($userRole)) {
-            $this->userRoles->removeElement($userRole);
-            $userRole->removeUser($this);
+        if ($this->roles->contains($role)) {
+            $this->roles->removeElement($role);
+            $role->removeUser($this);
         }
 
         return $this;
